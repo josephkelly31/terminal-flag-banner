@@ -1,26 +1,18 @@
 [project]
+dependencies = ["Pillow", "ascii_magic"]
 name = "terminal-flag-banner"
-version = "0.1.0"
+version = "0.1.1"
 description = "A Python package to display a banner of flags in the terminal."
-authors = [
-    {name = "Joseph Kelly",email = "jsph.kelly@outlook.com"}
-]
+authors = [{ name = "Joseph Kelly", email = "jsph.kelly@outlook.com" }]
 readme = "README.md"
-license = {text = "MIT License"}
+license = { text = "MIT License" }
 requires-python = ">=3.10"
-dependencies = [
-]
 
-[tool.poetry]
-name = "terminal-flag-banner"
-version = "0.1.0"
-description = "A Python package to display a banner of flags in the terminal."
-authors = ["Joseph Kelly jsph.kelly@outlook.com"]
-license = "MIT"
-dependencies = {python = ">=3.10",ascii-magic = "^2.3.0"}
-packages = [
-    { include = "terminal-flag-banner" }
-]
+[project.scripts]
+terminal-flag-banner = "terminal_flag_banner.__main__:main"
+
+[tool.setuptools.package-data]
+terminal-flag-banner = ["data/*"]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

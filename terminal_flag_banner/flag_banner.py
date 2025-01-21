@@ -2,12 +2,12 @@
 """
 
 from dataclasses import dataclass
-from enum import Enum
 import os
 
-# from tkinter import Image
+from importlib import resources
 from PIL import Image
 import ascii_magic
+from . import data
 
 
 @dataclass
@@ -16,16 +16,15 @@ class Flag:
 
     country_code: str = None
     country_name: str = None
-    flag_image_file_path: str = None
+    flag_image_file_exists: bool = False
     flag_image: Image = None
 
     def __post_init__(self):
-        self.flag_image_file_exists: bool = os.path.exists(self.flag_image_file_path)
-        self.flag_image = (
-            Image.open(self.flag_image_file_path)
-            if self.flag_image_file_exists
-            else None
-        )
+        flag_image_file_path = f"{self.country_code}.png"
+        my_resources = resources.files(data)
+        path = my_resources / flag_image_file_path
+        self.flag_image_file_exists = os.path.exists(path)
+        self.flag_image = Image.open(path)
 
 
 def display_single_flag_banner(flag: Flag, banner_length: int) -> bool:
@@ -131,28 +130,3 @@ def extend_banner(banner_img: Image, flag_to_append: Image) -> Image:
     extended_banner_img.paste(banner_img, (0, 0))
     extended_banner_img.paste(flag_to_append, (banner_img.width, 0))
     return extended_banner_img
-
-
-japan_flag = Flag(
-    country_code="JP",
-    country_name="Japan",
-    flag_image_file_path="./japan.png",
-)
-
-uk_flag = Flag(
-    country_code="GB",
-    country_name="United Kingdom",
-    flag_image_file_path="./uk.png",
-)
-
-spain_flag = Flag(
-    country_code="ES",
-    country_name="Spain",
-    flag_image_file_path="./spain.png",
-)
-
-flag_list = [japan_flag, uk_flag, spain_flag]
-
-if __name__ == "__main__":
-    for flag in flag_list:
-        display_single_flag_banner(flag=flag, banner_length=4)
