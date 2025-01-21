@@ -4,9 +4,10 @@
 from dataclasses import dataclass
 import os
 
-# from tkinter import Image
+from importlib import resources
 from PIL import Image
 import ascii_magic
+from . import data
 
 
 @dataclass
@@ -15,16 +16,15 @@ class Flag:
 
     country_code: str = None
     country_name: str = None
-    flag_image_file_path: str = None
+    flag_image_file_exists: bool = False
     flag_image: Image = None
 
     def __post_init__(self):
-        self.flag_image_file_exists: bool = os.path.exists(self.flag_image_file_path)
-        self.flag_image = (
-            Image.open(self.flag_image_file_path)
-            if self.flag_image_file_exists
-            else None
-        )
+        flag_image_file_path = f"{self.country_code}.png"
+        my_resources = resources.files(data)
+        path = my_resources / flag_image_file_path
+        self.flag_image_file_exists = os.path.exists(path)
+        self.flag_image = Image.open(path)
 
 
 def display_single_flag_banner(flag: Flag, banner_length: int) -> bool:
