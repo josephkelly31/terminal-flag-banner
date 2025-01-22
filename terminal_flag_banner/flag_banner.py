@@ -1,6 +1,7 @@
 """Python module to display a banner of flags in the terminal
 """
 
+import csv
 from dataclasses import dataclass
 import os
 
@@ -25,6 +26,20 @@ class Flag:
         path = my_resources / flag_image_file_path
         self.flag_image_file_exists = os.path.exists(path)
         self.flag_image = Image.open(path)
+
+
+def generate_flag_list() -> list[Flag]:
+    """Generates a list of Flag objects from the flags.csv file
+
+    Returns:
+        list[Flag]: The list of Flag objects
+    """
+    flag_list = []
+    with open(resources.files(data) / "flags.csv", mode="r", encoding="utf-8") as f:
+        for country_data in csv.reader(f):
+            flag = Flag(country_code=country_data[0], country_name=country_data[1])
+            flag_list.append(flag)
+    return flag_list
 
 
 def display_single_flag_banner(flag: Flag, banner_length: int) -> bool:
