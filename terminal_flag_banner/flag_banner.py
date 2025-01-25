@@ -315,15 +315,18 @@ class TextBanner(Banner):
         return banner
 
 
-def generate_flag_list() -> list[Flag]:
-    """Generates a list of Flag objects from the flags.csv file
+def generate_flag(country_code: str) -> Flag:
+    """Generates a Flag object from the flags.csv file
+
+    Args:
+        country_code (str): The country code of the flag to generate
 
     Returns:
-        list[Flag]: The list of Flag objects
+        Flag: The Flag object corresponding to the country code
     """
-    flag_list = []
     with open(resources.files(data) / "flags.csv", mode="r", encoding="utf-8") as f:
         for country_data in csv.reader(f):
-            flag = Flag(country_code=country_data[0], country_name=country_data[1])
-            flag_list.append(flag)
-    return flag_list
+            if country_data[0] == country_code:
+                flag = Flag(country_code=country_data[0], country_name=country_data[1])
+                return flag
+    return None
