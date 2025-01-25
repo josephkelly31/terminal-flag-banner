@@ -19,5 +19,5 @@ def test_calculate_flag_height():
 
 def test_find_banner_height():
     """Test that the height of the banner is calculated correctly"""
-    height = TextBanner._find_banner_height(flag=japan_flag)
+    height = TextBanner._find_banner_height(country_name=japan_flag.country_name)
     assert height == 13
