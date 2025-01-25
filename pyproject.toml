@@ -8,6 +8,25 @@ readme = "README.md"
 license = { text = "MIT License" }
 requires-python = ">=3.10"
 
+[tool.poetry]
+name = "terminal-flag-banner"
+version = "0.2.2"
+description = "A Python package to display a banner of flags in the terminal."
+authors = ["Joseph Kelly <jsph.kelly@outlook.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Pillow = "*"
+ascii_magic = "*"
+art = ">=6.4,<7.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "*"
+flake8 = "*"
+mypy = "*"
+
 [project.scripts]
 terminal-flag-banner = "terminal_flag_banner.__main__:main"
 
