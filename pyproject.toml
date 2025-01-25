@@ -1,7 +1,7 @@
 [project]
 dependencies = ["Pillow", "ascii_magic", "art (>=6.4,<7.0)"]
 name = "terminal-flag-banner"
-version = "0.2.1"
+version = "0.2.2"
 description = "A Python package to display a banner of flags in the terminal."
 authors = [{ name = "Joseph Kelly", email = "jsph.kelly@outlook.com" }]
 readme = "README.md"

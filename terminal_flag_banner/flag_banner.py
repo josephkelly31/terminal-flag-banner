@@ -18,6 +18,7 @@ class Flag:
 
     country_code: str = None
     country_name: str = None
+    native_name: str = None
     flag_image_file_exists: bool = False
     flag_image: Image = None
 
@@ -163,17 +164,16 @@ class TextBanner(Banner):
         return super().__new__(cls)
 
     @classmethod
-    def _generate_country_name(cls, flag: Flag) -> str:
-        """Generates a string representing the country name and country code
+    def _generate_country_name_art(cls, country_name: str) -> str:
+        """Generates a string representing the country name in art form
 
         Args:
-            flag (Flag): The flag object to generate the string from
+            country_name (str): The name to generate the art from
 
         Returns:
-            str: The string representing the country name and country code
+            str: The string representing the country name in art form
         """
-        country_string = f"{flag.country_name}"
-        country_name_art = art.text2art(country_string, font="block")
+        country_name_art = art.text2art(country_name, font="block")
         country_name_art = cls._pad_country_name(country_name=country_name_art)
         return country_name_art
 
@@ -250,36 +250,41 @@ class TextBanner(Banner):
         return columns
 
     @classmethod
-    def _find_banner_height(cls, flag: Flag) -> int:
+    def _find_banner_height(cls, country_name: str) -> int:
         """Finds the height of the banner
 
         Args:
-            flag (Flag): the flag object to display in the banner
+            country_name (str): the country name to display in the banner
 
         Returns:
             int: the height of the banner
         """
-        country_name = cls._generate_country_name(flag)
+        country_name = cls._generate_country_name_art(country_name=country_name)
         country_name_rows = country_name.split("\n")
         banner_height = len(country_name_rows)
         return banner_height
 
     @classmethod
-    def display_text_banner(cls, flag: Flag):
+    def display_text_banner(cls, flag: Flag, display_native_name: bool = False):
         """Generates a banner of flags and a country name in the terminal
 
         Args:
             flag (Flag): flag object to display in the banner
         """
 
-        banner_height = cls._find_banner_height(flag=flag)
+        if display_native_name:
+            display_name = flag.native_name
+        else:
+            display_name = flag.country_name
+
+        banner_height = cls._find_banner_height(country_name=display_name)
 
         flag_column_length = cls._find_flag_column_length(
             flag=flag, needed_height=banner_height
         )
 
         flag_text = cls.flag_to_text(flag=flag, columns=flag_column_length)
-        country_name = cls._generate_country_name(flag)
+        country_name = cls._generate_country_name_art(country_name=display_name)
 
         banner = cls._generate_text_banner(
             flag_text=flag_text, country_name_text=country_name
@@ -327,7 +332,11 @@ def generate_flag(country_code: str) -> Flag:
     with open(resources.files(data) / "flags.csv", mode="r", encoding="utf-8") as f:
         for country_data in csv.reader(f):
             if country_data[0] == country_code:
-                flag = Flag(country_code=country_data[0], country_name=country_data[1])
+                flag = Flag(
+                    country_code=country_data[0],
+                    country_name=country_data[1],
+                    native_name=country_data[2],
+                )
                 return flag
     return None
 
