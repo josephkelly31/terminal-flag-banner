@@ -330,3 +330,11 @@ def generate_flag(country_code: str) -> Flag:
                 flag = Flag(country_code=country_data[0], country_name=country_data[1])
                 return flag
     return None
+
+
+def display_flag_list_to_terminal():
+    """Generates a list of all the flags in the flags.csv file"""
+    with open(resources.files(data) / "flags.csv", mode="r", encoding="utf-8") as f:
+        for country_data in csv.reader(f):
+            print(f"Country code: {country_data[0]}, Country name: {country_data[1]}")
+    return

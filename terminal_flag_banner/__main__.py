@@ -1,7 +1,7 @@
 """Main module for terminal-flag-banner package."""
 
 import argparse
-from .flag_banner import TextBanner, generate_flag
+from .flag_banner import TextBanner, generate_flag, display_flag_list_to_terminal
 
 
 def main():
@@ -11,10 +11,20 @@ def main():
     parser.add_argument(
         "--country-code",
         type=str,
-        required=True,
+        default=None,
         help="The country code of the flag to display.",
     )
+    parser.add_argument(
+        "--flag-list",
+        action="store_true",
+        help="List all available flags.",
+    )
     args = parser.parse_args()
+
+    if args.flag_list:
+        print("Available flags:")
+        display_flag_list_to_terminal()
+        return
 
     flag = generate_flag(args.country_code.upper())
     if flag is None:
