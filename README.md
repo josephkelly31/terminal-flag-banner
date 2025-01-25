@@ -3,7 +3,7 @@ A Python package to display a country banner (the flag and country name) in the 
 
 #### To run
 ```sh
-usage: python -m terminal_flag_banner --country-code COUNTRY_CODE
+usage: python -m terminal_flag_banner [-h] [--country-code COUNTRY_CODE] [--flag-list] [--native-name]
 
 Display a flag banner in the terminal.
 
