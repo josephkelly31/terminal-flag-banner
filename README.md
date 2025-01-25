@@ -12,6 +12,7 @@ options:
   --country-code COUNTRY_CODE
                         The country code of the flag to display.
   --flag-list           List all available flags.
+  --native-name         Display the name of the country in the country's native language.
 ```
 
 #### Example I/O (Japan)
