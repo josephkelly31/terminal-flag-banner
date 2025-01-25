@@ -11,6 +11,7 @@ options:
   -h, --help            show this help message and exit
   --country-code COUNTRY_CODE
                         The country code of the flag to display.
+  --flag-list           List all available flags.
 ```
 
 #### Example I/O (Japan)
