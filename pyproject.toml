@@ -10,7 +10,7 @@ requires-python = ">=3.10"
 
 [tool.poetry]
 name = "terminal-flag-banner"
-version = "0.2.2"
+version = "0.2.3"
 description = "A Python package to display a banner of flags in the terminal."
 authors = ["Joseph Kelly <jsph.kelly@outlook.com>"]
 license = "MIT"

@@ -1,14 +1,16 @@
 """Python module to display a banner of flags in the terminal
 """
 
-import art
 import csv
-from dataclasses import dataclass
 import os
-
+import random
+from dataclasses import dataclass
 from importlib import resources
-from PIL import Image
+
+import art
 import ascii_magic
+from PIL import Image
+
 from . import data
 
 
@@ -339,6 +341,19 @@ def generate_flag(country_code: str) -> Flag:
                 )
                 return flag
     return None
+
+
+def generate_random_country_code() -> str:
+    """Generates a random country code from the flags.csv file
+
+    Returns:
+        str: The random country code
+    """
+    with open(resources.files(data) / "flags.csv", mode="r", encoding="utf-8") as f:
+        country_data = list(csv.reader(f))
+        random_country_index = random.randint(0, len(country_data) - 1)
+        random_country_code = country_data[random_country_index][0]
+        return random_country_code
 
 
 def display_flag_list_to_terminal():
